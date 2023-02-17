@@ -15,36 +15,27 @@ class MainActivity : AppCompatActivity() {
         setContentView(binding.root)
 
         binding.txtInputMask.addTextChangedListener(object : TextWatcher {
-            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
-
-            }
+            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
 
             override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
                 var digits = binding.txtInputMask.text.toString().length
-                if (s?.length!! <= 9) { var lastChar = ""
-//                if (digits > 9) {
-//                    binding.txtInputMask.setText(
-//                        binding.txtInputMask.text.toString().substring(0, 9)
-//                    )
-//                    val txtValue = binding.txtInputMask.text.toString().substring(0, 4) +
-//                            " " + binding.txtInputMask.text.toString().substring(5, 4)
-//                    binding.txtInputMask.setText(txtValue)
-//                }
+                var txtTemp = s.toString()
+                if (s?.length!! < 10) {
+                    var lastChar = ""
                     if (digits > 1) {
                         lastChar = binding.txtInputMask.text.toString().substring(digits - 1)
                     }
-                    if (lastChar != " ") {
-                        if (digits == 4) {
-                            binding.txtInputMask.text.append(" ")
-                        }
+                    if (digits == 4) {
+                        binding.txtInputMask.text.append(" ")
                     }
+                } else {
+                    txtTemp = txtTemp.replace(" ", "")
+                    txtTemp = txtTemp.replaceRange(4, 4, " ").substring(0, s?.length!! - 1)
+                    binding.txtInputMask.setText(txtTemp)
                 }
             }
 
-            override fun afterTextChanged(s: Editable?) {
-
-            }
-
+            override fun afterTextChanged(s: Editable?) {}
         })
     }
 }
